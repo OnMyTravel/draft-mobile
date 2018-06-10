@@ -1,3 +1,9 @@
 import { START_AUTHENTICATION } from './actiontypes';
 
-export const startConnexion = () => ({ type: START_AUTHENTICATION })
+
+export const startConnexion = () => {
+  return dispatch => {
+    dispatch({ type: START_AUTHENTICATION })
+  }
+}
+
