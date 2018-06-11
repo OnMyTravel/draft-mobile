@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { Link } from 'react-router-native'
 
 const Login = ({ startConnexion, isLogging } = {}) => {
   return (
@@ -12,6 +13,9 @@ const Login = ({ startConnexion, isLogging } = {}) => {
         disabled={isLogging}
         accessibilityLabel="Learn more about this purple button"
       />
+      <Link to="/">
+        <Text>Home</Text>
+      </Link>
     </View>
   );
 }
