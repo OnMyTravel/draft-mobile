@@ -1,8 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { NativeRouter, Route } from 'react-router-native'
+import { NativeRouter, Route, Switch } from 'react-router-native'
 
 import LoginPage from './containers/LoginPage';
 import LandingPage from './containers/LandingPage';
@@ -15,8 +15,10 @@ export default class App extends React.Component {
       <Provider store={store}>
         <NativeRouter>
           <View style={styles.container}>
-            <Route exact path="/" component={LandingPage} />
-            <Route path="/login" component={LoginPage} />
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/login" component={LoginPage} />
+            </Switch>
           </View>
         </NativeRouter>
       </Provider>
