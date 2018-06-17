@@ -1,17 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import { StyleSheet, Text, Button, TouchableHighlight } from 'react-native';
 
-const FacebookLogin = (props) => {
+const FacebookLogin = ({ action }) => {
   return (
-      <Text style={styles.title}>Se connecter avec Facebook</Text>
+      <TouchableHighlight onPress={action} underlayColor='transparent'>
+        <Text style={styles.title} onClick={action}>Connect with Facebook</Text>
+      </TouchableHighlight>
   );
+}
+
+FacebookLogin.propTypes = {
+  action: PropTypes.func
 }
 
 const styles = StyleSheet.create({
   title: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: '100',
+    fontSize: 15,
+    padding: 20,
+    backgroundColor: '#3273dc',
+    color: 'white',
+    borderRadius: 5,
+    marginTop: 30,
+    marginBottom: 30,
+    textAlign: 'center'
   },
 });
 
