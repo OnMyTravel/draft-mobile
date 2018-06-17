@@ -12,8 +12,7 @@
   },
   "devDependencies": {
     "jest": "^23.1.0",
-    "jest-expo": "^27.0.1",
-    "sinon": "^6.0.0"
+    "jest-expo": "^27.0.1"
   },
   "scripts": {
     "test": "npx jest",

@@ -1,20 +1,53 @@
-import { START_AUTHENTICATION, FACEBOOK_AUTHENTICATION_FAILED, FACEBOOK_AUTHENTICATION_SUCCESS } from './actiontypes';
+import {
+  START_AUTHENTICATION,
+  FACEBOOK_AUTHENTICATION_FAILED, 
+  FACEBOOK_AUTHENTICATION_SUCCESS, 
+  API_AUTHENTICATION_SUCCESS,
+  LOAD_USER_PROFILE
+} from './actiontypes';
 
 import Expo from 'expo';
 
-export const startConnexion = () => {
-  return async function (dispatch) {
+import API from '../services/API'
 
+export const startConnexion = () => {
+  return function (dispatch) {
     dispatch({ type: START_AUTHENTICATION })
 
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1801749093371838', {
-      permissions: ['public_profile']
-    })
+    API.Facebook.login()
+      .then((facebookAccess) => {
+        dispatch({
+          type: FACEBOOK_AUTHENTICATION_SUCCESS,
+          result: facebookAccess
+        })
 
-    if (type === 'success') {
-      dispatch({ type: FACEBOOK_AUTHENTICATION_SUCCESS })
-    } else {
-      dispatch({ type: FACEBOOK_AUTHENTICATION_FAILED })
-    }
+        return facebookAccess;
+      })
+      .then((facebookAccess) => {
+        return API.User.register(facebookAccess.accessToken)
+      })
+      .then((data) => {
+        API.setToken(data.token);
+        dispatch({
+          type: API_AUTHENTICATION_SUCCESS,
+          result: {
+            token: data.token
+          }
+        })
+
+        //        dispatch(push('/profile'));
+      })
+      .then(() => {
+        return API.User.get()
+      })
+      .then((userDetails) => {
+        dispatch({
+          type: LOAD_USER_PROFILE,
+          result: userDetails
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 }
