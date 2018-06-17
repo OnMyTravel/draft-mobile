@@ -1,19 +1,17 @@
-import { START_AUTHENTICATION } from '../actions/actiontypes';
+import {
+  LOAD_USER_PROFILE
+} from '../actions/actiontypes'
 
-const defaultUserState = {
-  isLogging: false
-}
+const defaultState = {}
 
-const userReducer = (state = defaultUserState, action) => {
+const UserReducers = (state = defaultState, action) => {
   switch (action.type) {
-    case START_AUTHENTICATION:
-      return Object.assign({}, state, {
-        isLogging: true
-      });
+    case LOAD_USER_PROFILE:
+      return Object.assign({}, state, action.result);
 
     default:
       return state
   }
 }
 
-export default userReducer;
+export default UserReducers
