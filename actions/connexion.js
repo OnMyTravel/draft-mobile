@@ -1,14 +1,13 @@
 import {
   START_AUTHENTICATION,
-  FACEBOOK_AUTHENTICATION_FAILED, 
-  FACEBOOK_AUTHENTICATION_SUCCESS, 
+  FACEBOOK_AUTHENTICATION_FAILED,
+  FACEBOOK_AUTHENTICATION_SUCCESS,
   API_AUTHENTICATION_SUCCESS,
   LOAD_USER_PROFILE
 } from './actiontypes';
 
-import Expo from 'expo';
-
-import API from '../services/API'
+import FacebookLoginError from '../errors/FacebookLoginError';
+import API from '../services/API';
 
 export const startConnexion = () => {
   return function (dispatch) {
@@ -35,7 +34,7 @@ export const startConnexion = () => {
           }
         })
 
-        //        dispatch(push('/profile'));
+        //      dispatch(push('/profile'));
       })
       .then(() => {
         return API.User.get()
@@ -47,7 +46,10 @@ export const startConnexion = () => {
         })
       })
       .catch((err) => {
-        console.error(err);
+        dispatch({
+          type: FACEBOOK_AUTHENTICATION_FAILED,
+          result: err 
+        })
       })
   }
 }
