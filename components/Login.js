@@ -3,10 +3,10 @@ import { StyleSheet, Text, ImageBackground, View } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Link } from 'react-router-native'
 
-import Title from './Title'
+import Error from './Error'
 import FacebookLogin from './FacebookLogin'
 
-const Login = ({ startConnexion, isLogging } = {}) => {
+const Login = ({ startConnexion, isLogging, hasLoggingFailed = false } = {}) => {
   return (
     <ImageBackground
       source={require('../assets/plan-our-trip-resized.jpg')}
@@ -18,6 +18,11 @@ const Login = ({ startConnexion, isLogging } = {}) => {
 
         <View style={styles.panel}>
           <Text style={styles.title}>Login</Text>
+
+          {hasLoggingFailed &&
+            <Error>An error occured while creating an account</Error>
+          }
+          
           <Text>Because we want to help you to share your most magical moments with as many friends and relatives
              as possibles, we started building OnMyTravel using the most popular social media.</Text>
 
@@ -38,7 +43,7 @@ const Login = ({ startConnexion, isLogging } = {}) => {
 const styles = StyleSheet.create({
   panel: {
     backgroundColor: 'whitesmoke',
-    borderRadius: 4,
+    borderRadius: 5,
     padding: 20
   },
   legalMention: {

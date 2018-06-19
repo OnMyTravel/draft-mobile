@@ -1,3 +1,4 @@
+import FacebookLoginError from '../errors/FacebookLoginError'
 import FacebookAccess from '../models/FacebookAccess';
 import Expo from 'expo';
 
@@ -14,7 +15,7 @@ class FacebookApi {
     return response.then((response) => {
       const { type, token } = response;
 
-      if (response.type == 'success') {
+      if (response.type === 'success') {
 
         return fetch(`https://graph.facebook.com/me?fields=id,name,email&access_token=${token}`)
           .then((response) => response.json())
@@ -23,10 +24,10 @@ class FacebookApi {
               accessToken: response.token,
               userId: details.id
             });
-          })        
+          })          
       }
 
-      throw new Error(response.type)
+      return Promise.reject(new FacebookLoginError(response.type));
     })
   }
 }

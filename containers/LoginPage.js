@@ -4,8 +4,12 @@ import Login from '../components/Login'
 import { startConnexion } from '../actions';
 
 const mapStateToProps = (state) => {
+  
+  const hasLoggingFailed = (state.connexion.hasOwnProperty('connexionError') && state.connexion.connexionError != null)
+  
   return {
-    isLogging: state.user.isLogging
+    isLogging: state.user.isLogging,
+    hasLoggingFailed: hasLoggingFailed,
   }
 }
 
